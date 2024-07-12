@@ -37,8 +37,8 @@ struct desc_stack{
 struct queue {
         int capacity;
         int size;
-        int front;
-        int rear;
+        int head;
+        int tail;
         int* elements;
     };
 

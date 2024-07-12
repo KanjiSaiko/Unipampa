@@ -2,14 +2,14 @@
 
 int main(){
 	
-	int opcao,chave_busca;
+	int opcao,chave_busca, tam;
 	struct descritor_grafo *grafo = NULL;
 	struct descritor_grafo_matriz *grafoMatriz = NULL;
 	struct desc_stack *minhaPilha = NULL;
 	opcao = -1;
 	while(opcao != 0){
 		printf("\n\n=========MENU=========\n");
-		printf("1-carrega grafo lista\n2-busca adjacencias\n3-imprime grafo lista\n4-pilhaArestas\n5-carrega grafo Matriz\n6-imprime grafo matriz\n7- Imprime DFS\n8- Imprime BFS\n0-SAIR\n");
+		printf("1-carrega grafo lista\n2-Tamanho de Vertices\n3-imprime grafo lista\n4-pilhaArestas\n5-carrega grafo Matriz\n6-imprime grafo matriz\n7- Imprime DFS\n8- Imprime BFS\n0-SAIR\n");
 		setbuf(stdin,NULL);
 		scanf("%d",&opcao);
 		switch(opcao){
@@ -20,14 +20,11 @@ int main(){
 					break;
 
 			case 2:
-					printf("digite a chave a ser buscada no grafo lista\n");
-					setbuf(stdin,NULL);
-					scanf("%d",&chave_busca);
-					struct nodo* temp = buscaVertice(grafo,chave_busca);
-					if(temp == NULL)
-						printf("não encontrou o nodo\n");
-					else
-						printf("encontrou o nodo\n");
+					if(grafo == NULL){
+						printf("\nCarregue grafos antes");
+						break;
+					}
+					printf("\nTamanho de vértices: %d", tamanhoVertices(grafo));
 					break;
 
 			case 3:
