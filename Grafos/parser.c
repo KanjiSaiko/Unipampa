@@ -6,10 +6,9 @@ struct descritor_grafo* parser(char *nomeArquivo){
 	FILE *file = fopen(nomeArquivo,"r");
 	int total;
 	fscanf(file,"%d",&total);
-	printf("=====================================================\n");
-	printf("================LEITURA GRAFO========================\n");
+	printf("\n---------Lendos grafos---------\n");
 	
-	printf("total de nodos %d\n",total);
+	printf("Total de nodos %d\n",total);
 	struct descritor_grafo *grafo = NULL;
 	grafo = inicializaGrafo(total); 
 	char linha[500];
@@ -25,15 +24,16 @@ struct descritor_grafo* parser(char *nomeArquivo){
 			linha[n]='\0';
 			if(n > 0 ) //frase valida
 			{
-			 printf("linha eh: %s\n", linha);
+			printf("\n_________________\n");
+			 printf("linha: %s", linha);
 			 int partida = atoi(strtok(linha," "));
-			 printf("\n partida strtok= %d\n",partida);
+			 printf("\n partida: %d",partida);
 			 int chegada = atoi(strtok(NULL," "));		 
-			 printf("\n chegada strtok= %d\n",chegada);
+			 printf("\n chegada: %d",chegada);
 			 
 			 int peso = atoi(strtok(NULL," "));		 
-			 printf("\n peso strtok= %d\n",peso);
-			 
+			 printf("\n peso: %d\n",peso);
+			 printf("_________________\n");
 			 grafo = insereAresta(grafo,partida,chegada,peso);
 			}
 			n=0; //zera a frase para pegar proximas informações
@@ -41,7 +41,6 @@ struct descritor_grafo* parser(char *nomeArquivo){
 		}   
 	}
 	fclose(file);
-	printf("=====================================================\n");
 	return grafo;
 }
 
@@ -118,16 +117,16 @@ void imprimeGrafo(struct descritor_grafo *grafo){
 	struct nodo *nodoGrafo = grafo->nodos;
 	printf("========GRAFO LISTA=============\n");
 		while(nodoGrafo != NULL){
-			printf("Nodo %d -",nodoGrafo->chave);
+			printf("Nodo %d ",nodoGrafo->chave);
 			struct aresta *adjacenciaNodo = nodoGrafo->adjacencias;
 				while(adjacenciaNodo != NULL){
-					printf("[ ->%d (peso %d)] ",adjacenciaNodo->chegada, adjacenciaNodo->peso);
+					printf("-> %d [peso %d] ",adjacenciaNodo->chegada, adjacenciaNodo->peso);
 					adjacenciaNodo = adjacenciaNodo->prox;
 				}	
 				printf("\n");
 				nodoGrafo = nodoGrafo->prox;
 		}
-	printf("=====================\n");
+	printf("================================\n");
 }
 
 
@@ -143,42 +142,51 @@ int listaAjacencias(struct nodo *vertice);
 //-----------------------------GRAFO COM MATRIZ ----------------------
 
 struct descritor_grafo_matriz* parserMatriz(char *nomeArquivo){
+	
 	FILE *file = fopen(nomeArquivo,"r");
-	int total;
-	fscanf(file,"%d",&total);
-	printf("total de nodos %d\n",total);
-	struct descritor_grafo_matriz *grafo = NULL;
-	grafo = inicializaGrafoMatriz(total); 
-	char linha[500];
-	char caractere;
-	int n;
-	n=0;
-	while((caractere =fgetc(file)) != EOF ){ //le o arquivo até o final caractere por caractere
-		if(caractere != '\n'){
-			linha[n]=caractere;
-			n++;
+		if(file){
+			int total;
+			fscanf(file,"%d",&total);
+			printf("total de nodos %d\n",total);
+			struct descritor_grafo_matriz *grafo = NULL;
+			grafo = inicializaGrafoMatriz(total); 
+			char linha[500];
+			char caractere;
+			int n;
+			n=0;
+			while((caractere =fgetc(file)) != EOF ){ //le o arquivo até o final caractere por caractere
+				if(caractere != '\n'){
+					linha[n]=caractere;
+					n++;
+				}
+				else{
+					linha[n]='\0';
+					if(n > 0 ) //frase valida
+					{
+					printf("\n_________________\n");
+					printf("linha: %s", linha);
+					int partida = atoi(strtok(linha," "));
+					printf("\n partida: %d",partida);
+					int chegada = atoi(strtok(NULL," "));		 
+					printf("\n chegada: %d",chegada);
+					
+					int peso = atoi(strtok(NULL," "));		 
+					printf("\n peso: %d\n",peso);
+					printf("_________________\n");
+					
+					grafo = insereArestaMatriz(grafo,partida,chegada,peso);
+					}
+					n=0; //zera a frase para pegar proximas informações
+					linha[n]='\0';
+				}   
+			}
+			fclose(file);
+			return grafo;
 		}
 		else{
-			linha[n]='\0';
-			if(n > 0 ) //frase valida
-			{
-			 printf("linha eh: %s\n", linha);
-			 int partida = atoi(strtok(linha," "));
-			 printf("\n partida strtok= %d\n",partida);
-			 int chegada = atoi(strtok(NULL," "));		 
-			 printf("\n chegada strtok= %d\n",chegada);
-			 
-			 int peso = atoi(strtok(NULL," "));		 
-			 printf("\n peso strtok= %d\n",peso);
-			 
-			 grafo = insereArestaMatriz(grafo,partida,chegada,peso);
-			}
-			n=0; //zera a frase para pegar proximas informações
-			linha[n]='\0';
-		}   
-	}
-	fclose(file);
-	return grafo;
+			fprintf(stderr, "Erro ao abrir arquivo");
+		}
+	
 }
 
 struct descritor_grafo_matriz * inicializaGrafoMatriz(int tamanho){
@@ -203,9 +211,9 @@ void imprimeGrafoMatriz(struct descritor_grafo_matriz *grafoMatriz){
 	printf("========GRAFO MATRIZ=============\n");
 	for(i=0;i<grafoMatriz->max_vertices;i++){
 		for(j=0;j<grafoMatriz->max_vertices;j++){
-			printf("[%d-%d]=%d \t",i+1,j+1,grafoMatriz->grafoMatriz[i][j]);
+			printf("%d->%d=[%d] \t",i+1,j+1,grafoMatriz->grafoMatriz[i][j]);
 		}
 		printf("\n");
 	}
-	printf("=====================\n");
+	printf("================================\n");
 }

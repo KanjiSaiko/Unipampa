@@ -9,12 +9,12 @@ int main(){
 	opcao = -1;
 	while(opcao != 0){
 		printf("\n\n=========MENU=========\n");
-		printf("1-carrega grafo lista\n2-busca adjacencias\n3-imprime grafo lista\n4-pilhaArestas\n5-carrega grafo Matriz\n6-imprime grafo matriz\n7- Imprime DFS\n8- Imprime\n0-SAIR\n");
+		printf("1-carrega grafo lista\n2-busca adjacencias\n3-imprime grafo lista\n4-pilhaArestas\n5-carrega grafo Matriz\n6-imprime grafo matriz\n7- Imprime DFS\n8- Imprime BFS\n0-SAIR\n");
 		setbuf(stdin,NULL);
 		scanf("%d",&opcao);
 		switch(opcao){
 			case 1:
-					grafo = parser("grafos.txt");
+					grafo = parser("grafos2.txt");
 					if(grafo !=NULL)
 						printf("grafo lista inicializado com sucesso\n");
 					break;
@@ -65,13 +65,13 @@ int main(){
 					break;
 
 			case 5:
-					grafoMatriz = parserMatriz("grafo.txt");
+					grafoMatriz = parserMatriz("grafos2.txt");
 					if(grafoMatriz != NULL)
 						printf("grafo inicializado com sucesso\n");
 					break;
 
 			case 6:
-					imprimeGrafo(grafoMatriz);
+					imprimeGrafoMatriz(grafoMatriz);
 					break;
 			
 			case 7:
@@ -87,7 +87,9 @@ int main(){
 				break;
 
 			case 0:
-					exit(-1);
+					free(grafo);
+					free(grafoMatriz);
+					free(minhaPilha);
 		}	
 	}
 	return 0;

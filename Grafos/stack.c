@@ -50,11 +50,10 @@ struct nodopilha* top(struct desc_stack *stack){
 
 void showStack(struct desc_stack *stack){
 	struct nodopilha* topo = top(stack);
-	printf("====Pilha de Arestas==========\n");
+	printf("===Pilha de Arestas===\n");
 	while(topo !=NULL){
 		printf("[ %d -> %d ] \n",topo->arestaPilha->partida,topo->arestaPilha->chegada);
 		topo = topo->prox;
 	}
-	printf("\n");
-	printf("==============\n");
+	printf("======================\n");
 }
