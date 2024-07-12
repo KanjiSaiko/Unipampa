@@ -6,7 +6,7 @@ Nodo* findMin(Nodo* node) {
     return node;
 }
 
-Nodo* Remove(Nodo* raiz, int chave) {
+Nodo *Remove(Nodo* raiz, int chave) {
     if (raiz == NULL) {
         return raiz;
     }

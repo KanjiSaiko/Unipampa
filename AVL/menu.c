@@ -38,7 +38,7 @@ int main(void){
                 printf("Digite a chave a ser removida: ");
                 setbuf(stdin, NULL);
                 scanf("%d", &chave);
-                Remove(&(AVL->raiz), chave);
+                AVL->raiz = Remove((AVL->raiz), chave);
 
 
                 break;

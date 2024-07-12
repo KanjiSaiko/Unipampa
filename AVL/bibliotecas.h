@@ -27,5 +27,5 @@ void insert(Nodo **raiz, int chave);
 void Imprime_preorder(Nodo *raiz);
 void Imprime_inorder(Nodo *raiz);
 void Imprime_posorder(Nodo *raiz);
-void Remove(Nodo **raiz, int chave);
+Nodo *Remove(Nodo *raiz, int chave);
 Nodo *Balanceamento(Nodo *raiz);
