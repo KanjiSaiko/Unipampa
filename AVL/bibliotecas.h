@@ -23,9 +23,15 @@ struct desc_avl{
 
 
 DescAVL *createAVL();
-void insert(Nodo **raiz, int chave);
+Nodo *insert(Nodo *raiz, int chave);
 void Imprime_preorder(Nodo *raiz);
 void Imprime_inorder(Nodo *raiz);
 void Imprime_posorder(Nodo *raiz);
 Nodo *Remove(Nodo *raiz, int chave);
 Nodo *Balanceamento(Nodo *raiz);
+void atualizarFator(Nodo *n);
+int altura(Nodo *n);
+Nodo *rotacaoDireita(Nodo *desbalanceado);
+Nodo *rotacaoEsquerda(Nodo *desbalanceado);
+Nodo *rotacaoDireitaEsquerda(Nodo *desbalanceado);
+Nodo *rotacaoEsquerdaDireita(Nodo *desbalanceado);

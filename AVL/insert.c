@@ -1,22 +1,29 @@
 #include "bibliotecas.h"
 
 
-void insert(Nodo **raiz, int chave){
-    if((*raiz)==NULL){ //se a raiz estiver vazia:
-		(*raiz) = malloc(sizeof(Nodo));
-		(*raiz)->chave = chave;
-        //restante permanecerá null
-	}
+Nodo *insert(Nodo *raiz, int chave) {
+    if (raiz == NULL) {
+        raiz = malloc(sizeof(Nodo));
+        if (raiz == NULL) {
+            fprintf(stderr, "Erro de alocação de memória\n");
+            exit(EXIT_FAILURE);
+        }
+        raiz->chave = chave;
+        raiz->esq = NULL;
+        raiz->dir = NULL;
+        raiz->fator = 0;  // Inicializado corretamente
+    } 
+	else {
+        if (chave <= raiz->chave) {
+            raiz->esq = insert(raiz->esq, chave); // Correção aqui
+        } else {
+            raiz->dir = insert(raiz->dir, chave); // Correção aqui
+        }
 
-	else{
-		if(chave <= (*raiz)->chave){ //se a chave for menor ou igual à chave da raiz:
-            (*raiz)->fator++;
-			insert(&(*raiz)->esq, chave); //insiro a esquerda
-		}
+        // Atualiza o fator de balanceamento de forma apropriada
+        atualizarFator(raiz);
+    }
 
-		else{ //caso a chave seja maior
-		    (*raiz)->fator--;
-			insert(&(*raiz)->dir, chave); //insiro na direita
-		}
-	}
+    // Aplica o balanceamento após a inserção para manter a árvore AVL
+    return Balanceamento(raiz);
 }

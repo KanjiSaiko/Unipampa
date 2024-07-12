@@ -25,8 +25,8 @@ int main(void){
                 printf("\nDigite a chave: ");
                 setbuf(stdin, NULL);
                 scanf("%d", &chave);
-                insert(&(AVL->raiz), chave);
-                AVL->raiz = Balanceamento(AVL->raiz);
+                AVL->raiz = insert((AVL->raiz), chave);
+                //AVL->raiz = Balanceamento(AVL->raiz);
                 printf("\nChave adicionada com sucesso.\n");
                 break;
 
@@ -44,8 +44,12 @@ int main(void){
                 break;
 
             case '4':
-            if(AVL->raiz == NULL){
-                printf("Crie uma arvore antes ou adicione um elemento\n");
+            if(AVL == NULL){
+                printf("Crie uma arvore primeiro\n");
+                break;
+            }
+            else if(AVL->raiz == NULL){
+                printf("Adicione elementos primeiro\n");
                 break;
             }
             printf("Pre order: ");

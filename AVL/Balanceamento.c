@@ -3,78 +3,87 @@
 
 Nodo *Balanceamento(Nodo *raiz){
     Nodo *aux=NULL,*aux2=NULL;
-    if(raiz !=NULL){
+    if(raiz != NULL){
+
         raiz->esq = Balanceamento(raiz->esq);
         raiz->dir = Balanceamento(raiz->dir);
-        if((raiz->fator==2)||(raiz->fator==-2)){
-            if((raiz->fator > 0)&&(raiz->esq->fator>0)){
-                //fator Direita
-                aux = raiz->esq;
-                raiz->esq = aux->dir;
-                aux->dir = raiz;
-                raiz->fator = 0;
-                raiz=aux;
+
+        atualizarFator(raiz);
+        if (raiz->fator == 2) {
+            if (raiz->esq && raiz->esq->fator >= 0) {
+                // Rotação simples à direita
+                return rotacaoDireita(raiz);
+            } else if (raiz->esq && raiz->esq->fator < 0) {
+                // Rotação dupla à direita (Esquerda-Direita)
+                return rotacaoEsquerdaDireita(raiz);
             }
-            else{
-                if((raiz->fator<0)&&(raiz->dir->fator<0)){
-                    //fator Esquerda
-                    aux = raiz->dir;
-                    raiz->dir = aux->esq;
-                    aux->esq = raiz;
-                    raiz->fator = 0;
-                    raiz = aux;
-                }
-                else{
-                    //fator Dupla Direita
-                    if((raiz->fator>0)&&(raiz->esq->fator<0)){
-                        aux=raiz->esq;
-                        aux2=aux->dir;
-                        aux->dir=aux2->esq;
-                        aux2->esq=aux;
-                        raiz->esq=aux2->dir;
-                        aux2->dir=raiz;
-                        if(aux2->fator==-1){
-                            raiz->fator=1;
-                        }
-                        else{
-                            raiz->fator=0;
-                        }
-                        if(aux2->fator==1){
-                            aux->fator=-1;
-                        }
-                        else{
-                            aux->fator=0;
-                        }
-                        raiz=aux2;
-                    }
-                    else{
-                        //fator Dupla Esquerda
-                        if((raiz->fator<0)&&(raiz->dir->fator>0)){
-                            aux=raiz->dir;
-                            aux2=aux->esq;
-                            aux->esq=aux2->dir;
-                            aux2->dir=aux;
-                            raiz->dir=aux2->esq;
-                            aux2->esq=raiz;
-                            if(aux2->fator==-1){
-                                raiz->fator=1;
-                            }
-                            else{
-                                raiz->fator=0;
-                            }
-                            if(aux2->fator==1){
-                                aux->fator=-1;
-                            }
-                            else{
-                                aux->fator=0;
-                            }
-                            raiz=aux2;
-                        }
-                    }
-                }
+        } 
+        else if (raiz->fator == -2) {
+            if (raiz->dir && raiz->dir->fator <= 0) {
+                // Rotação simples à esquerda
+                return rotacaoEsquerda(raiz);
+            } else if (raiz->dir && raiz->dir->fator > 0) {
+                // Rotação dupla à esquerda (Direita-Esquerda)
+                return rotacaoDireitaEsquerda(raiz);
             }
         }
-        return raiz;
     }
-    return NULL;
+    return raiz;
 }
+
+int altura(Nodo *n) {
+    if (!n) return 0;
+    int altura_esq = altura(n->esq);
+    int altura_dir = altura(n->dir);
+    return (altura_esq > altura_dir ? altura_esq : altura_dir) + 1;
+}
+
+void atualizarFator(Nodo *n) {
+    if (n) {
+        int altura_esq = altura(n->esq);
+        int altura_dir = altura(n->dir);
+        n->fator = altura_esq - altura_dir;
+    }
+}
+
+Nodo *rotacaoDireita(Nodo *desbalanceado) {
+    Nodo *novoRaiz = desbalanceado->esq;
+    desbalanceado->esq = novoRaiz->dir;
+    novoRaiz->dir = desbalanceado;
+
+    // Atualizar fatores de balanceamento após rotação
+    atualizarFator(desbalanceado);
+    atualizarFator(novoRaiz);
+
+    return novoRaiz;  // Novo raiz após rotação
+}
+
+Nodo *rotacaoEsquerda(Nodo *desbalanceado) {
+    Nodo *novoRaiz = desbalanceado->dir;
+    desbalanceado->dir = novoRaiz->esq;
+    novoRaiz->esq = desbalanceado;
+
+    // Atualizar fatores de balanceamento após rotação
+    atualizarFator(desbalanceado);
+    atualizarFator(novoRaiz);
+
+    return novoRaiz;  // Novo raiz após rotação
+}
+
+
+Nodo *rotacaoDireitaEsquerda(Nodo *desbalanceado) {
+    desbalanceado->esq = rotacaoEsquerda(desbalanceado->esq);
+    return rotacaoDireita(desbalanceado);
+}
+
+Nodo *rotacaoEsquerdaDireita(Nodo *desbalanceado) {
+    desbalanceado->dir = rotacaoDireita(desbalanceado->dir);
+    return rotacaoEsquerda(desbalanceado);
+}
+
+
+
+
+
+
+
