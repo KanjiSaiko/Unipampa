@@ -1,8 +1,6 @@
 #index
 index:
-		gcc parser.c -c -g
-		gcc stack.c -c -g
-		gcc main.c parser.o stack.o -o grafo -g
+		gcc -o grafo *.c
 		clear
 		./grafo
 		
