@@ -1,15 +1,14 @@
 #index
 index:
-		gcc -o grafo *.c
-		
-		./grafo
+		gcc -o AVL *.c
+
+		./AVL
 
 testes:
-		gcc -g *.c -o grafo_teste
+		gcc -g *.c -o AVL_teste
 		
-		gdb ./grafo_teste
+		gdb ./AVL_teste
 		
 clean:
 		#APAGANDO OS ARQUIVOS EXECUTAVEL E OBJETO
-		rm grafo
-		rm *.o
+		rm AVL
