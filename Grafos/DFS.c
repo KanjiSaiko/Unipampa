@@ -20,7 +20,7 @@ void DFSVisita(struct descritor_grafo *grafo, int vertice, int* visitados) {
 }
 
 void DFS(struct descritor_grafo *grafo, int chaveInicio) {
-    int totalVertices = tamanhoVertices(grafo);
+    int totalVertices = grafo->max_vertices;
     int* visitados = inicializaVisitados(totalVertices);
     DFSVisita(grafo, chaveInicio, visitados);  // Inicia a busca em profundidade a partir de chaveInicio
     free(visitados);
@@ -33,17 +33,6 @@ void DFS(struct descritor_grafo *grafo, int chaveInicio) {
             visitados[i] = 0;  // 0 significa não visitado
         }
         return visitados;
-    }
-
-//CONTA QUANTOS VERTICES POSSUI O GRAFO
-    int tamanhoVertices(struct descritor_grafo *grafo) {
-        int contador = 0;
-        struct nodo* temp = grafo->nodos;
-        while (temp != NULL) {
-            contador++;
-            temp = temp->prox;
-        }
-        return contador;
     }
 
 

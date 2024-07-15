@@ -1,7 +1,7 @@
 #include "bibliotecas.h"
 
 void BFS(struct descritor_grafo *grafo, int chaveInicio) {
-    int totalVertices = tamanhoVertices(grafo);
+    int totalVertices = grafo->max_vertices;
     int* visitados = inicializaVisitados(totalVertices);
 
     //cria fila de acordo com o total de vertices no grafo
