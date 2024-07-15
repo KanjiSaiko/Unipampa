@@ -9,12 +9,12 @@ int main(){
 	opcao = -1;
 	while(opcao != 0){
 		printf("\n\n=========MENU=========\n");
-		printf("1-carrega grafo lista\n2-Tamanho de Vertices\n3-imprime grafo lista\n4-pilhaArestas\n5-carrega grafo Matriz\n6-imprime grafo matriz\n7- Imprime DFS\n8- Imprime BFS\n0-SAIR\n");
+		printf("1-carrega grafo lista\n2-Tamanho de Vertices\n3-imprime grafo lista\n4-carrega grafo Matriz\n5-imprime grafo matriz\n6- Imprime DFS\n7- Imprime BFS\n0-SAIR\n");
 		setbuf(stdin,NULL);
 		scanf("%d",&opcao);
 		switch(opcao){
 			case 1:
-					grafo = parser("grafos2.txt", &vis);
+					grafo = parser("grafos2.txt");
 					if(grafo !=NULL)
 						printf("grafo lista inicializado com sucesso\n");
 					break;
@@ -32,52 +32,22 @@ int main(){
 					break;
 
 			case 4:
-					if(grafo ==NULL){
-						printf("grafo lista inicializado com sucesso\n");
-						break;
-					}
-					minhaPilha = criaDescStack();
-
-					//grafo pronto vai acessar as arestas para criar no da pilha e inserir
-					struct aresta *arestaGrafo=NULL;
-					//recebe o primeiro da lista de vertices
-					struct nodo *auxVertice = grafo->nodos;
-					
-					while(auxVertice != NULL){
-					
-						//percorre as adjacencias do auxvertice colocando na pilha
-						arestaGrafo = auxVertice->adjacencias;
-						while(arestaGrafo != NULL){
-							//crio nó pilha para inserir na pilha
-							struct nodopilha *noPilha = criaNodoStack(arestaGrafo);
-							//insere na pilha
-							push(minhaPilha,noPilha);
-							arestaGrafo = arestaGrafo->prox;
-						}
-						auxVertice = auxVertice->prox;
-					}
-					
-					//mostra pilha completa
-					showStack(minhaPilha);
-					break;
-
-			case 5:
 					grafoMatriz = parserMatriz("grafos2.txt");
 					if(grafoMatriz != NULL)
 						printf("grafo inicializado com sucesso\n");
 					break;
 
-			case 6:
+			case 5:
 					imprimeGrafoMatriz(grafoMatriz);
 					break;
 			
-			case 7:
+			case 6:
 				printf("Digite o vértice inicial para DFS:\n");
 				scanf("%d", &chave_busca);
 				DFS(grafo, chave_busca);
 				break;
 
-			case 8:
+			case 7:
 				printf("Digite o vértice inicial para BFS:\n");
 				scanf("%d", &chave_busca);
 				BFS(grafo, chave_busca);

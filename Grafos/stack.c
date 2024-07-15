@@ -1,4 +1,4 @@
-#include "bibliotecas.h"
+#include "stack.h"
 
 struct desc_stack *criaDescStack(void){
 	struct desc_stack *stack = (struct desc_stack*)malloc(sizeof(struct desc_stack));

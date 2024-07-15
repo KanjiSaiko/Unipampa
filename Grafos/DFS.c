@@ -1,30 +1,51 @@
 #include "bibliotecas.h"
 
-//Funcao auxiliar: realiza o cálculo
-void buscaProfundidade(struct descritor_grafo *grafo, int Vinicial, int *visitado, int cont){
-    int i;
-    //marco vertice como visitado
-        visitado[Vinicial] = cont;
+void DFSVisita(struct descritor_grafo *grafo, int vertice, int* visitados) {
+    // Marca o vértice como visitado (como o vetor inicializa com 0, faço 0-1)
+    visitados[vertice - 1] = 1;  
+    printf("Visitado %d \n", vertice);
 
-    //visito todas as arestas que partem do vertice:
-    for(i = 0; i < grafo->grau[Vinicial]; i++){
-        //verifico se o vizinho foi visitado ou nao
-        if(!visitado[grafo->arestas[Vinicial][i]])
-            buscaProfundidade(grafo, grafo->arestas[Vinicial][i], visitado, cont+1);
+    struct nodo* nodoVertice = buscaVertice(grafo, vertice);
+    if (nodoVertice == NULL) return;
+
+    struct aresta* adjacencia = nodoVertice->adjacencias;
+    while (adjacencia != NULL) {
+        //verifica se o vértice no final de uma aresta adjacente não foi visitado
+            if (!visitados[adjacencia->chegada - 1]) {
+            // Recursivamente visita vértices adjacentes não visitados
+                DFSVisita(grafo, adjacencia->chegada, visitados);  
+        }
+        adjacencia = adjacencia->prox;
     }
 }
 
-
-
-
-
-
-void buscaProfundidade_Grafos(struct descritor_grafo *grafo, int Vinicial, int *visitado){
-    int i, cont = 1;
-
-    //marca vertices como nao visitados
-        for(i=0, i< grafo->max_vertices; i++)
-            visitado[i] = 0;
-
-    buscaProfundidade(grafo, Vinicial, visitado, cont);
+void DFS(struct descritor_grafo *grafo, int chaveInicio) {
+    int totalVertices = tamanhoVertices(grafo);
+    int* visitados = inicializaVisitados(totalVertices);
+    DFSVisita(grafo, chaveInicio, visitados);  // Inicia a busca em profundidade a partir de chaveInicio
+    free(visitados);
 }
+
+//INICIALIZA UM VETOR DE ACORDO COM N VERTICES QUE TENHO NO GRAFO
+    int* inicializaVisitados(int tamanho) {
+        int* visitados = (int*)malloc(tamanho * sizeof(int));
+        for (int i = 0; i < tamanho; i++) {
+            visitados[i] = 0;  // 0 significa não visitado
+        }
+        return visitados;
+    }
+
+//CONTA QUANTOS VERTICES POSSUI O GRAFO
+    int tamanhoVertices(struct descritor_grafo *grafo) {
+        int contador = 0;
+        struct nodo* temp = grafo->nodos;
+        while (temp != NULL) {
+            contador++;
+            temp = temp->prox;
+        }
+        return contador;
+    }
+
+
+
+
