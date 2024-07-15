@@ -8,12 +8,10 @@ typedef struct desc_avl DescAVL;
 
 
 struct nodo{
-    struct nodo *pai;
     int chave;
     struct nodo *esq;
     struct nodo *dir;
-    int fator;
-    int balanco;
+    int altura;
 };
 
 struct desc_avl{
@@ -23,15 +21,20 @@ struct desc_avl{
 
 
 DescAVL *createAVL();
-Nodo *insert(Nodo *raiz, int chave);
-void Imprime_preorder(Nodo *raiz);
-void Imprime_inorder(Nodo *raiz);
-void Imprime_posorder(Nodo *raiz);
-Nodo *Remove(Nodo *raiz, int chave);
-Nodo *Balanceamento(Nodo *raiz);
-void atualizarFator(Nodo *n);
-int altura(Nodo *n);
-Nodo *rotacaoDireita(Nodo *desbalanceado);
-Nodo *rotacaoEsquerda(Nodo *desbalanceado);
-Nodo *rotacaoDireitaEsquerda(Nodo *desbalanceado);
-Nodo *rotacaoEsquerdaDireita(Nodo *desbalanceado);
+Nodo *createNodo(int chave);
+Nodo *insert(Nodo *raiz, Nodo *nodo);
+int maiorAltura(int alturaE, int alturaD);
+int AlturaDoNo(Nodo *no);
+int FatordeBalanceamento(Nodo *no);
+Nodo *Balancear(Nodo *raiz);
+void Imprime_preorder(Nodo *no);
+void Imprime_inorder(Nodo *no);
+void Imprime_posorder(Nodo *no);
+Nodo *RotacaoEsquerda(Nodo *raiz);
+Nodo *rotacaoDireita(Nodo *raiz);
+Nodo *rotacaoDireitaEsquerda(Nodo *raiz);
+Nodo *rotacaoEsquerdaDireita(Nodo *raiz);
+Nodo *remocao(Nodo *raiz, int chave);
+
+
+

@@ -6,9 +6,7 @@ Nodo *createNodo(int chave){
     nodo->chave = chave;
     nodo->dir = NULL;
     nodo->esq = NULL;
-    nodo->pai = NULL;
-    nodo->fator = 0;
-    nodo->balanco = 0;
+    nodo->altura = 0;
 
     return nodo;
 }

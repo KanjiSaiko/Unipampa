@@ -3,69 +3,49 @@
 
 int main(void){
     int chave;
-    char escolha;
+    int escolha;
+    Nodo *nodo = NULL;
     DescAVL *AVL = NULL;
 
     do{
-        printf("\nDigite:\n[1]create AVL\n[2]insert\n[3]remove\n[4]imprimir\n[0]sair\n");
+        printf("\n\nDigite:\n[1]Create AVL\n[2]Insert\n[3]Remove\n[4]Imprime\n[0]Sair\n");
         setbuf(stdin, NULL);
-        scanf(" %c", &escolha);
+        scanf("%d", &escolha);
 
         switch(escolha){
-            case '1':
+            case 1:
                 AVL = createAVL();
-                printf("\nArvore criada com suceso.\n");
                 break;
 
-            case '2':
-                if(AVL == NULL){
-                    printf("Crie a arvore primeiro\n");
-                    break;
-                }
-                printf("\nDigite a chave: ");
-                setbuf(stdin, NULL);
+            case 2:
+                printf("Digite a chave: ");
                 scanf("%d", &chave);
-                AVL->raiz = insert((AVL->raiz), chave);
-                //AVL->raiz = Balanceamento(AVL->raiz);
-                printf("\nChave adicionada com sucesso.\n");
+                nodo = createNodo(chave);
+                AVL->raiz = insert(AVL->raiz, nodo);
                 break;
 
-            case '3':
-                if(AVL == NULL){
-                    printf("Crie a arvore primeiro\n");
-                    break;
-                }
+            case 3:
                 printf("Digite a chave a ser removida: ");
-                setbuf(stdin, NULL);
                 scanf("%d", &chave);
-                AVL->raiz = Remove((AVL->raiz), chave);
-
-
+                AVL->raiz = remocao(AVL->raiz, chave);
                 break;
 
-            case '4':
-            if(AVL == NULL){
-                printf("Crie uma arvore primeiro\n");
-                break;
-            }
-            else if(AVL->raiz == NULL){
-                printf("Adicione elementos primeiro\n");
-                break;
-            }
-            printf("Pre order: ");
-            Imprime_preorder(AVL->raiz);
-            printf("\nIn order: ");
-            Imprime_inorder(AVL->raiz);
-            printf("\nPos order: ");
-            Imprime_posorder(AVL->raiz);
-            printf("\n");
-            break;
+            case 4:
+                printf("\nImprimindo PreOrder: ");
+                Imprime_preorder(AVL->raiz);
 
-            case '0':
+                printf("\nImprimindo InOrder: ");
+                Imprime_inorder(AVL->raiz);
+                
+                printf("\nImprimindo PosOrder: ");
+                Imprime_posorder(AVL->raiz);
+
+                break;
+            case 0:
                 break;
         }
 
-    }while(escolha != '0');
+    }while(escolha != 0);
 
 
     return 0;
