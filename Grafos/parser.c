@@ -1,7 +1,7 @@
 #include "bibliotecas.h"
 
 
-struct descritor_grafo* parser(char *nomeArquivo){
+struct descritor_grafo* parser(char *nomeArquivo, int **vis){
 
 	FILE *file = fopen(nomeArquivo,"r");
 	int total;
@@ -9,6 +9,10 @@ struct descritor_grafo* parser(char *nomeArquivo){
 	printf("\n---------Lendos grafos---------\n");
 	
 	printf("Total de nodos %d\n",total);
+
+	//faz a alocação de memoria de acordo com o total de nodos/vértices
+	(*vis) = (int*)malloc(total * sizeof(int));
+
 	struct descritor_grafo *grafo = NULL;
 	grafo = inicializaGrafo(total); 
 	char linha[500];

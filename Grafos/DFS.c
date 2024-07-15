@@ -1,44 +1,30 @@
 #include "bibliotecas.h"
 
+//Funcao auxiliar: realiza o cálculo
+void buscaProfundidade(struct descritor_grafo *grafo, int Vinicial, int *visitado, int cont){
+    int i;
+    //marco vertice como visitado
+        visitado[Vinicial] = cont;
 
-int* inicializaVisitados(int tamanho) {
-    int* visitados = (int*)malloc(tamanho * sizeof(int));
-    for (int i = 0; i < tamanho; i++) {
-        visitados[i] = 0;  // 0 significa não visitado
-    }
-    return visitados;
-}
-
-
-void DFS(struct descritor_grafo *grafo, int chaveInicio) {
-    int totalVertices = tamanhoVertices(grafo);
-    int* visitados = inicializaVisitados(totalVertices);
-    DFSUtil(grafo, chaveInicio, visitados);
-    free(visitados);
-}
-
-void DFSUtil(struct descritor_grafo *grafo, int vertice, int* visitados) {
-    visitados[vertice - 1] = 1;  // Marca como visitado
-    printf("Visitado %d \n", vertice);
-
-    struct nodo* nodoVertice = buscaVertice(grafo, vertice);
-    if (nodoVertice == NULL) return;
-
-    struct aresta* adjacencia = nodoVertice->adjacencias;
-    while (adjacencia != NULL) {
-        if (!visitados[adjacencia->chegada - 1]) {
-            DFSUtil(grafo, adjacencia->chegada, visitados);
-        }
-        adjacencia = adjacencia->prox;
+    //visito todas as arestas que partem do vertice:
+    for(i = 0; i < grafo->grau[Vinicial]; i++){
+        //verifico se o vizinho foi visitado ou nao
+        if(!visitado[grafo->arestas[Vinicial][i]])
+            buscaProfundidade(grafo, grafo->arestas[Vinicial][i], visitado, cont+1);
     }
 }
 
-int tamanhoVertices(struct descritor_grafo *grafo) {
-    int contador = 0;
-    struct nodo* temp = grafo->nodos;
-    while (temp != NULL) {
-        contador++;
-        temp = temp->prox;
-    }
-    return contador;
+
+
+
+
+
+void buscaProfundidade_Grafos(struct descritor_grafo *grafo, int Vinicial, int *visitado){
+    int i, cont = 1;
+
+    //marca vertices como nao visitados
+        for(i=0, i< grafo->max_vertices; i++)
+            visitado[i] = 0;
+
+    buscaProfundidade(grafo, Vinicial, visitado, cont);
 }

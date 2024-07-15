@@ -2,7 +2,7 @@
 
 int main(){
 	
-	int opcao,chave_busca, tam;
+	int opcao,chave_busca, tam, *vis;
 	struct descritor_grafo *grafo = NULL;
 	struct descritor_grafo_matriz *grafoMatriz = NULL;
 	struct desc_stack *minhaPilha = NULL;
@@ -14,7 +14,7 @@ int main(){
 		scanf("%d",&opcao);
 		switch(opcao){
 			case 1:
-					grafo = parser("grafos2.txt");
+					grafo = parser("grafos2.txt", &vis);
 					if(grafo !=NULL)
 						printf("grafo lista inicializado com sucesso\n");
 					break;

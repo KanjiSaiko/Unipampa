@@ -7,6 +7,8 @@
 struct descritor_grafo{
 	int max_vertices;
 	int max_arestas;
+	int **arestas;
+	int *grau;
 	struct nodo *nodos;
 };
 
@@ -42,7 +44,7 @@ struct queue {
         int* elements;
     };
 
-struct descritor_grafo* parser(char *nomeArquivo);
+struct descritor_grafo* parser(char *nomeArquivo, int **vis);
 struct descritor_grafo * inicializaGrafo(int tamanho);
 struct nodo* criaVertice(int chave);
 void insereVertice(struct descritor_grafo *grafo, int chave);
@@ -82,10 +84,8 @@ void imprimeGrafo(struct descritor_grafo *grafo);
 
 
 //DFS.C 
-	int* inicializaVisitados(int tamanho);
-	void DFS(struct descritor_grafo *grafo, int chaveInicio);
-	void DFSUtil(struct descritor_grafo *grafo, int vertice, int* visitados);
-	int tamanhoVertices(struct descritor_grafo *grafo);
+	void buscaProfundidade_Grafos(struct descritor_grafo *grafo, int ini, int *visitado);
+	void buscaProfundidade_Grafos(struct descritor_grafo *grafo, int ini, int *visitado);
 
 
 //FILA
